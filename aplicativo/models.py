@@ -73,7 +73,8 @@ class Producto(models.Model):
     #Propiedades
     id_producto = models.AutoField(('ID de Producto'), primary_key=True)
     descripcion = models.CharField(max_length=100)
-    precio = models.IntegerField()
+    precio_base = models.IntegerField()
+    precio_final = models.IntegerField()
     tipo = models.ForeignKey(Tipo_Producto, on_delete=models.CASCADE)
     class Meta:
         ordering = ['id_producto']
