@@ -1,0 +1,9 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<form action="{% url 'appSupp:auth' %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{{ mensaje }}
+{% endblock %}

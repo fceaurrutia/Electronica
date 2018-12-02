@@ -1,0 +1,57 @@
+header {
+    background-color: lightcyan;
+    padding-bottom: 1%;
+}
+#dropdownmenu{
+    transition: 0.5s;
+}
+#dropdownmenu:hover:after{
+	content: "Menu";
+	white-space: pre-wrap;
+}
+.cortoCentrado{
+    display:block; 
+    margin:0 auto; 
+    text-align:center;
+    width: 50%;
+}
+.linea{
+    height: 2px;
+    margin: 1vw;
+	width: 120%;
+	margin-left: -20px;
+	background-color: lightslategray;
+}
+@media (max-width: 992px) {
+    nav{
+        font-size: 22px;
+    }
+    header h1{
+        font-size: 36px;
+        font-weight: bold;
+    }
+}
+  
+@media (max-width: 768px) {
+    nav{
+        font-size: 28px;
+    }
+    header h1{
+        font-size: 28px;
+        font-weight: bold;
+    }
+}
+  
+@media (max-width: 576px) {
+    nav{
+        font-size: 24px;
+    }
+    a{
+        text-align: center;
+        background-color: aqua;
+    }
+    header h1{
+        font-size: 24px;
+        font-weight: bold;
+    }
+}
