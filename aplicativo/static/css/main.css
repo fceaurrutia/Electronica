@@ -13,7 +13,7 @@ header {
     display:block; 
     margin:0 auto; 
     text-align:center;
-    width: 50%;
+    width: 25%;
 }
 .linea{
     height: 2px;
@@ -40,6 +40,12 @@ header {
         font-size: 28px;
         font-weight: bold;
     }
+    .cortoCentrado{
+        display:block; 
+        margin:0 auto; 
+        text-align:center;
+        width: 50%;
+    }
 }
   
 @media (max-width: 576px) {
@@ -53,5 +59,11 @@ header {
     header h1{
         font-size: 24px;
         font-weight: bold;
+    }
+    .cortoCentrado{
+        display:block; 
+        margin:0 auto; 
+        text-align:center;
+        width: 75%;
     }
 }

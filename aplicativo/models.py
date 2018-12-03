@@ -49,7 +49,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD=('usuario')
     REQUIRED_FIELDS=['correo']
     usuario = models.CharField(('Nombre de Usuario'), max_length=12, primary_key=True)
-    correo = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)
     is_active = models.BooleanField(('Está Activo'), default=True)
     is_staff = models.BooleanField(('Staff'), default=False)
     tipo_usuario = models.ForeignKey(Tipo_Usuario, on_delete=models.CASCADE, default=1)

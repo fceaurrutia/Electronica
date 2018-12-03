@@ -3,14 +3,14 @@ from django.contrib import admin
 from .models import Usuario, Tienda, Oferta
 
 class LoginForm(forms.Form):
-    usuario = forms.CharField(max_length=12, widget=forms.TextInput(attrs={'class': 'form-control cortoCentrado', 'placeholder':'Usuario'}))
-    password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'class':'form-control cortoCentrado', 'placeholder': 'Contraseña'}))
+    usuario = forms.CharField(max_length=12, widget=forms.TextInput(attrs={'class': 'form-control cortoCentrado', 'placeholder':'Usuario', 'name':'usuario'}))
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'class':'form-control cortoCentrado', 'placeholder': 'Contraseña', 'name':'contraseña'}))
 
 class RegistroForm(forms.ModelForm):
     password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
     class Meta:
         model = Usuario
-        fields = ('usuario', 'correo')
+        fields = ('usuario', 'email')
 
 class ADMUsuarioForm(forms.ModelForm):
     class Meta:

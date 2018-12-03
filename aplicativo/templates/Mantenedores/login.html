@@ -1,9 +1,32 @@
 {% extends "Base/base.html" %}
+{% load socialaccount %}
 {% block content %}
+{% if user is None %}
+<p class="cortoCentrado bg-info">El usuario ingresado no existe o su contraseña es incorrecta.</p>
+{% endif %}
 <form action="auth/" method="POST">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Iniciar Sesión">
+    <div class="row">
+        <div class="form-group cortoCentrado">
+            <label for="usuario">Usuario</label>
+            {{ form.usuario }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group cortoCentrado">
+            <label for="contraseña">Contraseña</label>
+            {{ form.password }}
+        </div>
+    </div>
+    <div class="row">
+        <input class="btn btn-primary cortoCentrado" type="submit" value="Iniciar Sesión">
+    </div>
+    <div class="row">
+        <a class="btn btn-primary cortoCentrado" href="{% provider_login_url 'google' %}">Iniciar sesión con Google</a>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary cortoCentrado" href="{% provider_login_url 'facebook' method='oauth2' %}">Iniciar sesión con Facebook</a>
+    </div>
 </form>
 {{ mensaje }}
 {% endblock %}
