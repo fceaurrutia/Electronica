@@ -6,4 +6,6 @@ urlpatterns = [
     path('', views.Home, name='home'),
     url('login', views.Login, name='login'),
     url('auth', views.Auth, name='auth'),
+    url('confirmado', views.ConfirmarRegistro, name='confirmado'),
+    url('registrar', views.Registrar, name='registrar'),
 ]

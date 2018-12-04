@@ -9,6 +9,10 @@ header {
 	content: "Menu";
 	white-space: pre-wrap;
 }
+.centrado{
+    display: block;
+    margin:0 auto;
+}
 .cortoCentrado{
     display:block; 
     margin:0 auto; 

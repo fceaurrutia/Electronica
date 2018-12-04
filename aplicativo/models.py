@@ -47,7 +47,7 @@ class Tienda(models.Model):
 class Usuario(AbstractBaseUser, PermissionsMixin):
     #Propiedades
     USERNAME_FIELD=('usuario')
-    REQUIRED_FIELDS=['correo']
+    REQUIRED_FIELDS=['email']
     usuario = models.CharField(('Nombre de Usuario'), max_length=12, primary_key=True)
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(('Está Activo'), default=True)
@@ -64,6 +64,15 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     #Métodos
     def __str__(self):
         return self.usuario
+            
+    @classmethod
+    def crear(cls, req):
+        user = Usuario.objects.create(usuario=req.cleaned_data["usuario"], 
+        email=req.cleaned_data["email"], 
+        tienda=req.cleaned_data["tienda"],
+        tipo_usuario=req.cleaned_data["tipo_usuario"])
+        user.set_password(req.cleaned_data["password"])
+        return user
 
 class Tipo_Producto(models.Model):
     id_tipo = models.AutoField(('ID'), primary_key=True)

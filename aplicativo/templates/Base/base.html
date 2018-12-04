@@ -35,7 +35,7 @@
                 <a class="dropdown-item" href="#">Cerrar Sesión</a>
                 {% else %}
                 <a class="dropdown-item" href="{% url 'appSupp:login' %}">Iniciar Sesión</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
+                <a class="dropdown-item" href="{% url 'appSupp:registrar' %}">Registrarse</a>
                 {% endif %}
             </div>
         </nav>

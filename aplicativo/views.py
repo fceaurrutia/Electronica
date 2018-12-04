@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm
+from .forms import LoginForm, RegistroForm
 from django.contrib import auth
-from .models import Tipo_Usuario
+from .models import Tipo_Usuario, Usuario
 
 def Home(request):
     return render(request, 'Mantenedores/home.html')
@@ -29,3 +29,18 @@ def Auth(request):
         print('no existe')
         form = LoginForm()
         return render(request, 'Mantenedores/login.html', {'user': user, 'form':form})
+
+def Registrar(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            Usuario.crear(form).save()
+            return redirect('appSupp:confirmado')
+        else:
+            return render(request, 'Mantenedores/registrar.html', {'form': form})
+    else:
+        form = RegistroForm()
+        return render(request, 'Mantenedores/registrar.html', {'form': form})
+
+def ConfirmarRegistro(request):
+    return render(request, 'Mantenedores/creado.html')
