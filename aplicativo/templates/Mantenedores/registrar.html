@@ -1,0 +1,24 @@
+{% extends "Base/base.html" %}
+{% load socialaccount %}
+{% block content %}
+<h1 class='cortoCentrado'>
+    Formulario de Registro
+</h1>
+<form action="#" method="POST">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+    <div class='row'>
+        <div class='cortoCentrado'>
+            {{ field.label_tag}}
+            {{ field }}
+            {{ field.errors }}
+            {{ field.help_text }}
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <div class='cortoCentrado'>
+        <button type='submit' class='btn btn-primary'>Registrar</button>
+    </div>
+</form>
+{% endblock %}
