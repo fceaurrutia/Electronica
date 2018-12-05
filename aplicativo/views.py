@@ -117,6 +117,7 @@ def PerfilVendedor(request):
 def VentasVendedor(request):
     if request.user.is_authenticated:
         stats = Boleta.objects.filter(vendedor=request.user, terminada=True)
+        print(stats)
         return render(request, 'Mantenedores/Usuario/historialVentas.html', {'ventas':stats})
     else:
         return redirect('appSupp:error')

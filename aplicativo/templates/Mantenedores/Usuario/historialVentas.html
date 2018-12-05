@@ -15,10 +15,10 @@
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
-            {% for x in ofertas %}
+            {% for x in ventas %}
             <div class="row">
                 <tr>
-                    <td>{{ x.id_oferta }}</td>
+                    <td>{{ x.id_boleta }}</td>
                     <td>{{ x.fecha }}</td>
                     <td>{{ x.sucursal.nombre }}</td>
                     <td>{{ x.comentario }}</td>
