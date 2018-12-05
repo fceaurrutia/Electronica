@@ -1,0 +1,25 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<section>
+    <table class="table" style="background-color: beige">
+        <thead>
+            <tr>
+                <th scope="col">Vendedores</th>
+                <th scope="col">Tiendas</th>
+                <th scope="col">Productos</th>
+                <th scope="col">Ofertas</th>
+            </tr>
+        </thead>
+        <div class="row">
+            <tr>
+                <td><a href="{% url 'appSupp:AsignarTienda' %}" class="btn btn-success">Asignar Vendedor</a></td>
+                <td><a href="{% url 'appSupp:crearTienda' %}" class="btn btn-success">Crear Tienda</a></td>
+                <td><a href="{% url 'appSupp:crearProducto' %}" class="btn btn-success">Crear Producto</a></td>
+                <td><a href="{% url 'appSupp:crearOferta' 1 %}" class="btn btn-success">Crear Oferta Producto</a>
+                    <a href="{% url 'appSupp:crearOferta' 2 %}" class="btn btn-success">Crear Oferta Categoria</a>
+                </td>
+            </tr>
+        </div>
+    </table>
+</section>
+{% endblock %}

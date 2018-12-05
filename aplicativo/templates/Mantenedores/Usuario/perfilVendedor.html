@@ -1,0 +1,51 @@
+{% extends "Base/base.html" %}
+{% block content %}
+{% load humanize %}
+{% load l10n %}
+<script type="text/javascript">
+    $.getJSON('https://mindicador.cl/api', function (data) {
+        var dailyIndicators = data;
+        $("<p/>", { html: 'El valor actual del dolar es $' + dailyIndicators.dolar.valor, class: "centrado", style: "font-weight: bold" }).appendTo("#dolar");
+    }).fail(function () {
+        console.log('Error al consumir la API!');
+    });
+</script>
+<section>
+    <h1 class="centrado">Perfil del Vendedor</h1>
+    <div>
+        {% if user.is_authenticated %}
+        <div class="row" style="text-align: center; display: block; padding:2px; margin:2px;">
+            <b class="cajita">Correo: {{ user.email }}</b>
+        </div>
+        <div class="row" style="text-align: center; display: block; padding:2px; margin:2px;">
+            <b class="cajita">Cargo: {{ user.tipo_usuario.tipo }}</b>
+        </div>
+        <div class="row" style="text-align: center; display: block; padding:2px; margin:2px;">
+            <b class="cajita">Ventas totales: {{ ventas }}</b>
+        </div>
+        <div class="row" style="text-align: center; display: block; padding:2px; margin:2px;">
+            <b class="cajita">Dinero vendido: ${% if dinero.monis is None %}0
+                {% else %}
+                {{ dinero.monis|intcomma }}
+                {% endif %}</b>
+        </div>
+        <div class="row" style="text-align: center; display: block; padding:2px; margin:2px;">
+            <b class="cajita">Sucursal: {% if user.tienda is None %}
+                No tiene tienda asignada.
+                {% else %}
+                {{ user.tienda.nombre }}
+                {% endif%}
+            </b>
+            {% endif %}
+        </div>
+        <br>
+        <div class="row">
+            <a class="btn btn-success centrado" style="color:white;" href="{% url 'appSupp:historial' %}">Historial de
+                Ventas</a>
+        </div>
+        <div id="dolar" class="row centrado">
+        </div>
+    </div>
+    <a class="btn btn-success" href="{% url 'appSupp:home' %}">Volver</a>
+</section>
+{% endblock %}

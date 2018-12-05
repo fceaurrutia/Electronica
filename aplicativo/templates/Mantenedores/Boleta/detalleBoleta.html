@@ -1,0 +1,30 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<section>
+    {% if not boleta is None %}
+    <b class="centrado">{{boleta.id_boleta}} - {{ user.email }}</b>
+    <br>
+    <table class="table" style="background-color: beige">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        {% for x in productos %}
+        <div class="row">
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ x.id_producto.nombre}}</td>
+                <td>{{ x.cantidad }}</td>
+                <td>${{ x.total }}</td>
+            </tr>
+        </div>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <a class="btn btn-success" href="{% url 'appSupp:historial' %}">Volver</a>
+</section>
+{% endblock %}

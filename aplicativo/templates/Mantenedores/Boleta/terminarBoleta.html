@@ -1,0 +1,10 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<form method="POST">
+        {% csrf_token %}
+        <h2>Boleta #{{ boleta.id_boleta }}</h2>
+        <h3>¿Realmente desea terminar su venta?</h3>
+        <button class="btn btn-success" type="submit">Terminar</button>
+        <a class="btn btn-primary" href="{% url 'appSupp:vender' %}">Cancelar</a>
+    </form>
+{% endblock %}

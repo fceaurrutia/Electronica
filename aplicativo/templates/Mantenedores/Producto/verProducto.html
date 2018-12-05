@@ -1,0 +1,36 @@
+{% extends "Base/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block content %}
+<div class="row">
+    <section class="col-9">
+        <h2>Producto</h2>
+        <b>{{ prod.tipo.tipo }} - {{ prod.nombre }}</b>
+        <img src='{{ prod.fotito.url }}' class="img-fluid" title="{{ prod.descripcion }}" />
+        <div class="row">
+            <p>{{ prod.descripcion }}</p>
+        </div>
+    </section>
+    <aside class="col-3">
+        <form method="POST">
+            {% csrf_token %}
+            <input name="id_producto" type="hidden" value="{{ prod.id_producto }}">
+            <input name="cantidad" type="hidden" value="1">
+            <input name="id_boleta" type="hidden" value="1">
+            <input name="total" type="hidden" value="{{ prod.precio_final|unlocalize }}">
+            {% if not prod.precio_base == prod.precio_final %}
+            <div class="row">
+                <p>Precio Anterior: <strike>${{ prod.precio_base|intcomma }}</strike></p>
+            </div>
+            {% endif %}
+            <div class="row">
+                <b>Precio Actual: ${{ prod.precio_final|intcomma }}</b>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Agregar al Carro
+            </button>
+        </form>
+    </aside>
+</div>
+{% endblock %}

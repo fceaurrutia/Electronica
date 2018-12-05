@@ -1,0 +1,11 @@
+{% extends "Base/base.html" %}
+{% load socialaccount %}
+{% block content %}
+<div class="cortoCentrado bg-primary">
+    Su solicitud se ha realizado con éxito.
+</div>
+<br>
+<div class="cortoCentrado">
+    <a href="{% url 'appSupp:home' %}" class="btn btn-success">Volver</a>
+</div>
+{% endblock %}

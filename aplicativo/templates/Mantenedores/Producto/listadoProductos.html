@@ -1,0 +1,76 @@
+{% extends "Base/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+{% block content %}
+<section>
+    <img class="img-fluid centrado" style="border: solid lightblue 2px" src="{% static 'img/electronica.jpg' %}">
+    <h1 class="centrado text-success">
+        Venta de productos electrónicos
+    </h1>
+    {% if user.is_authenticated %}
+    <h2 class="centrado bg-success">Listado de Productos</h2>
+    <h2 class="centrado bg-success">--------------------</h2>
+    <h2 class="centrado bg-success">Filtros</h2>
+    <form id="filtro" method="GET" action="{% url 'appSupp:home' %}" oninput="x.value=parseInt(precio.value)">
+        {% csrf_token %}
+        <label for="tipo" >Tipo de Producto</label>
+        <select class="form-control" id="tipo" name="tipo" onchange="cambiarPagina(1);">
+            <option value="" {% if request.GET.tipo == "" %}selected{% endif %}>Sin filtro</option>
+            {% for x in ftipo %}
+            <option value="{{ x.tipo__id_tipo }}" {% if x.tipo__id_tipo == actual %}selected{% endif %}>{{x.tipo__tipo}}</option>
+            {% endfor %}
+        </select>
+
+        <div class="form-group">
+            <label for="formControlRange" >Rango de precio</label>
+            <input value="{{ request.GET.precio }}" type="range" class="form-control-range" name="precio" id="precio"
+                min="{{ min.precio_final__min|unlocalize }}" max="{{ max.precio_final__max|unlocalize }}" onchange="valorSlider(precio.value);">
+            Menor a <output for="precio" id="x" name="x"></output>
+        </div>
+
+        <div class="cortoCentrado">
+            <a class="btn btn-danger centrado" href="{% url 'appSupp:home' %}" style="margin-top:0.5vw">Borrar Filtros</a>
+        </div>
+
+        <div name="paginador" class="centrado">
+            <input type="hidden" id="page" name="page" value="">
+            <span class="current centrado">
+                    Página {{ productos.number }} de {{ productos.paginator.num_pages }}.
+            </span>
+            {% if productos.has_previous %}
+            <script type="text/javascript"> 
+                var anterior = "{{ productos.previous_page_number }}";
+             </script>
+            <input type="button" class="btn btn-success" onclick="cambiarPagina(1);" value="Primera" name="pag">
+            <input type="button" class="btn btn-primary" onclick="cambiarPagina(anterior);" value="Anterior" name="pag">
+            {% endif %}
+            {% if productos.has_next %}
+            <script type="text/javascript"> 
+                var siguiente = "{{ productos.next_page_number }}";
+                var ultima = "{{ productos.paginator.num_pages }}"
+             </script>
+            <input type="button" class="btn btn-primary" onclick="cambiarPagina(siguiente);" value="Siguiente" name="pag">
+            <input type="button" class="btn btn-success" onclick="cambiarPagina(ultima);" value="Última" name="pag">
+            {% endif %}
+        </div>
+        
+    </form>
+
+    <div class="row">
+        {% for x in productos %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <a class="row" href="{% url 'appSupp:redir' x.id_producto %}" style="text-align: center; display: block;">{{x.id_producto}} - {{ x.nombre }}</a>
+            <a href="{% url 'appSupp:redir' x.id_producto %}"><img src='{{ x.fotito.url }}' class="producto centrado"
+                    title="{{ x.descripcion }}" /></a>
+            <b class="centrado" >Precio: ${{ x.precio_final|intcomma }}</b>
+        </div>
+        {% if forloop.counter|divisibleby:"4" and not forloop.last %}
+    </div>
+    <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

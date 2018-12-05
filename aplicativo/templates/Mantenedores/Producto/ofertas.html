@@ -1,0 +1,43 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<section>
+
+    <div class="col-3">
+
+    </div>
+    <table class="table" style="background-color: beige">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categoria/Producto</th>
+                <th scope="col">Porcentaje de Descuento</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        {% for x in ofertas %}
+        <div class="row">
+            <tr>
+                <td>{{ x.id_oferta }}</td>
+                <td> {% if not x.tipo_producto_objetivo is None %}
+                    {{ x.tipo_producto_objetivo.tipo }}
+                    {% else %}
+                    {{ x.producto_objetivo.nombre }}
+                    {% endif %}</td>
+                <td>{{ x.porcentaje }}%</td>
+                <td>
+                    {% if x.tipo_producto_objetivo is None %}
+                    <a href="{% url 'appSupp:redir' x.producto_objetivo.id_producto %}" class="btn btn-success">Ver Producto</a>
+                    {% else %}
+                    <a href="/?tipo={{ x.tipo_producto_objetivo.id_tipo }}" class="btn btn-success">Ver Listado</a>
+                    {% endif %}
+                    {% if user.tipo_usuario.id_tipo is 2 %}
+                    <a href="{% url 'appSupp:elimOferta' x.id_oferta %}" class="btn btn-danger">Eliminar Oferta</a>
+                    {% endif %}
+                </td>
+            </tr>
+        </div>
+        {% endfor %}
+    </table>
+    <a class="btn btn-success" href="{% url 'appSupp:perfilVendedor' %}">Volver</a>
+</section>
+{% endblock %}

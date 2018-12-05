@@ -1,0 +1,48 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<section>
+    {% if not boleta is None %}
+    <b class="centrado">{{boleta.id_boleta}} - {{ user.email }}</b>
+    <br>
+    <table class="table" style="background-color: beige">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        {% for x in productos %}
+        <div class="row">
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ x.id_producto.nombre}}</td>
+                <td>{{ x.cantidad }}</td>
+                <td>${{ x.total }}</td>
+                <td>
+                    <a href="{% url 'appSupp:añadir' x.detalle_id %}" class="btn btn-success">+</a>
+                    <a href="{% url 'appSupp:sustraer' x.detalle_id %}" class="btn btn-success">-</a>
+                    <a href="{% url 'appSupp:eliminarProd' x.detalle_id %}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        </div>
+        {% endfor %}
+    </table>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        <textarea rows="3" style="width: 50%; resize: none;" maxlength="200" class="form-control centrado" type="textarea" placeholder="Comentario" name="Comentario"></textarea>
+        <br>
+        <button style="display: block"class="btn btn-success centrado" type="submit">Aplicar</button>
+    </form>
+    <a href="{% url 'appSupp:eliminarBoleta' boleta.id_boleta %}" class="btn btn-danger">Eliminar Boleta</a>
+    <a href="{% url 'appSupp:terminarBoleta' boleta.id_boleta %}" class="btn btn-success" style="float:right">Terminar Venta</a>
+    {% else %}
+    <b class="centrado">Aún no generas una venta.</b>
+    <b class="centrado">Presiona el botón para ir al listado de productos.</b>
+    <a href="{% url 'appSupp:home' %}" class="btn btn-success" style="display: block; margin: 0 auto;">Listado</a>
+    {% endif %}
+</section>
+{% endblock %}

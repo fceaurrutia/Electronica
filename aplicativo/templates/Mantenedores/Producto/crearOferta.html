@@ -1,0 +1,30 @@
+{% extends "Base/base.html" %}
+{% block content %}
+{% load static %}
+<script src="{% static 'js/jsCasero.js' %}"></script>
+<section>
+    <form method="POST">
+        {% if form.producto_objetivo in form %}
+        <h2 class="centrado bg-success">Crear Oferta para un Producto</h2>
+        {% else %}
+        <h2 class="centrado bg-success">Crear Oferta para una Categoría</h2>
+        {% endif %}
+        <br><br><br>
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+        <div class='row'>
+            <div class='cortoCentrado'>
+                {{ field.label_tag}}
+                {{ field }}
+                {{ field.errors }}
+                {{ field.help_text }}
+            </div>
+        </div>
+        {% endfor %}
+        <br>
+        <div class='cortoCentrado'>
+            <button type="submit" class="btn btn-success">Crear</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

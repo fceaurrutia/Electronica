@@ -1,0 +1,16 @@
+{% extends "Base/base.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if not mensaje is None %}
+<h1 class="bg-danger" style="text-align: center;">{{mensaje}}</h1>
+<div class="cortoCentrado">
+        <a href="{% url 'appSupp:encargado' %}" class="btn btn-success">Volver</a>
+    </div>
+{% else %}
+<h1 class="bg-danger" style="text-align: center;">No existe el producto ingresado. Verifique que haya ingresado el ID correctamente.</h1>
+{% endif %}
+{% else %}
+<h1 class="bg-danger" style="text-align: center;">No puede ingresar al sitio sin haber ingresado a su cuenta.</h1>
+{% endif %}
+{% endblock %}

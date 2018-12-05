@@ -1,0 +1,10 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<form method="POST">
+        {% csrf_token %}
+        <h2>Oferta #{{ oferta.id_oferta }}</h2>
+        <h3>¿Realmente desea eliminar esta oferta?</h3>
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+        <a class="btn btn-primary" href="{% url 'appSupp:ofertas' %}">Cancelar</a>
+    </form>
+{% endblock %}

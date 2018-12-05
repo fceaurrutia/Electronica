@@ -1,0 +1,22 @@
+{% extends "Base/base.html" %}
+{% block content %}
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+        <div class='row'>
+            <div class='cortoCentrado'>
+                {{ field.label_tag}}
+                {{ field }}
+                {{ field.errors }}
+                {{ field.help_text }}
+            </div>
+        </div>
+        {% endfor %}
+        <br>
+        <div class='cortoCentrado'>
+            <button type="submit" class="btn btn-success">Asignar</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
