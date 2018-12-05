@@ -25,5 +25,7 @@ urlpatterns = [
     path(r'encargado/crearTienda/', views.CrearTienda, name="crearTienda"),
     path(r'encargado/crearProducto/', views.CrearProducto, name="crearProducto"),
     path(r'encargado/asignarTienda/', views.AsigTienda, name="AsignarTienda"),
+    url(r'encargado/crearOferta/(?P<tipo>\w+)$', views.CrearOferta, name="crearOferta"),
     path(r'encargado/', views.MenuEncargado, name="encargado"),
+    url(r'encargado/ofertas/eliminar/(?P<idoferta>\w+)$', views.EliminarOferta, name="elimOferta"),
 ]

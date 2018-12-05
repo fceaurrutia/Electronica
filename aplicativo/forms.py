@@ -68,7 +68,7 @@ class TiendaForm(forms.ModelForm):
             'direccion': forms.TextInput(attrs={'maxlength':'100','class':'form-control cortoCentrado', 'placeholder':'Dirección'}),
             'ciudad': forms.Select(attrs={'class':'form-control cortoCentrado'}),
             'comuna': forms.Select(attrs={'class':'form-control cortoCentrado'}),
-            'telefono': forms.NumberInput(attrs={'class':'form-control cortoCentrado', 'onkeypress':'return validarNumero(event, this)'}),
+            'telefono': forms.TextInput(attrs={'class':'form-control cortoCentrado', 'onkeypress':'return validarNumero(event, this)'}),
             'correo': forms.EmailInput(attrs={'class':'form-control cortoCentrado', 'placeholder':'Correo', 'onkeypress':'return validarCorreo(event)'}),
         }
 
@@ -95,15 +95,39 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo'].label_from_instance = lambda obj: "%s - %s" % (obj.id_tipo, obj.tipo)
         self.fields['tipo'].label = 'Tipo de Producto'
 
-class ListaProductosOferta(forms.ModelForm):
+class CrearOfertaCategoria(forms.ModelForm):
     class Meta:
         model = Oferta
         exclude = ['producto_objetivo']
+        widgets = {
+            'id_tienda': forms.Select(attrs={'class':'form-control cortoCentrado'}),
+            'tipo_producto_objetivo': forms.Select(attrs={'class':'form-control cortoCentrado', 'required':'True'}),
+            'porcentaje': forms.TextInput(attrs={'maxlength':'3', 'class':'form-control cortoCentrado', 'onkeyup':'return validarDescuento(event, this)'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super(CrearOfertaCategoria, self).__init__(*args, **kwargs)
+        self.fields['id_tienda'].queryset = Tienda.objects.all()
+        self.fields['id_tienda'].label_from_instance = lambda obj: "%s - %s" % (obj.id_tienda, obj.nombre)
+        self.fields['id_tienda'].label = 'Tienda Objetivo'
+        self.fields['tipo_producto_objetivo'].label = 'Categoría Objetivo'
+        self.fields['tipo_producto_objetivo'].label_from_instance = lambda obj: "%s - %s" % (obj.id_tipo, obj.tipo)
 
-class ProductoOferta(forms.ModelForm):
+class CrearOfertaProducto(forms.ModelForm):
     class Meta:
         model = Oferta
         exclude = ['tipo_producto_objetivo']
+        widgets = {
+            'id_tienda': forms.Select(attrs={'class':'form-control cortoCentrado'}),
+            'producto_objetivo': forms.Select(attrs={'class':'form-control cortoCentrado', 'required':'True'}),
+            'porcentaje': forms.TextInput(attrs={'maxlength':'3', 'class':'form-control cortoCentrado', 'onkeyup':'return validarDescuento(event, this)'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super(CrearOfertaProducto, self).__init__(*args, **kwargs)
+        self.fields['id_tienda'].queryset = Tienda.objects.all()
+        self.fields['id_tienda'].label_from_instance = lambda obj: "%s - %s" % (obj.id_tienda, obj.nombre)
+        self.fields['id_tienda'].label = 'Tienda Objetivo'
+        self.fields['producto_objetivo'].label = 'Producto Objetivo'
+        self.fields['producto_objetivo'].label_from_instance = lambda obj: "%s - %s" % (obj.id_producto, obj.nombre)
 
 class FiltroProductos(forms.Form):
     tipo = forms.IntegerField(required=False)

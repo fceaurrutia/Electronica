@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
     'django.contrib.humanize',
+    'django_extensions',
+    'pwa',
 ]
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
@@ -148,36 +149,11 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'aplicativo\static'),
-    ]
-
-SOCIAL_AUTH_FACEBOOK_KEY = '1055674334557042'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'bcd3e044444573e6ec9d481f5001aa50'
-
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.12',
-    }
-}
-
+]
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_QUERY_EMAIL = True
 LOGIN_REDIRECT_URL = ''
 LOGOUT_REDIRECT_URL = ''
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'aplicativo/static/js', 'serviceworker.js')

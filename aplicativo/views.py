@@ -124,6 +124,7 @@ def VentasVendedor(request):
 def Ofertas(request):
     if request.user.is_authenticated:
         off = Oferta.objects.filter(id_tienda=request.user.tienda)
+        print(off)
         return render(request, 'Mantenedores/Producto/ofertas.html', {'ofertas':off})
     else:
         return redirect('appSupp:error')
@@ -248,4 +249,68 @@ def AsigTienda(request):
         return render(request, 'Mantenedores/Tienda/asigVendedor.html', {'form':form})
     else:
         return redirect('appSupp:error')
-        
+
+def CrearOferta(request, tipo):
+    if request.user.is_authenticated and request.user.tipo_usuario.id_tipo == 2:
+        if tipo == '1':
+            #Para Producto específico.
+            if request.method=="POST":
+                form = CrearOfertaProducto(request.POST)
+                if form.is_valid():
+                    of = form.save()
+                    prod = Producto.objects.get(id_producto=of.producto_objetivo.id_producto)
+                    prod.precio_base = prod.precio_final
+                    prod.precio_final = prod.precio_base*(1-(of.porcentaje/100))
+                    print(str(prod.precio_base)+' - '+str(prod.precio_final))
+                    prod.save()
+                    return redirect('appSupp:exito')
+                else:
+                    return render(request, 'Mantenedores/Producto/crearOferta.html', {'form':form})
+            else:
+                form = CrearOfertaProducto()
+                return render(request, 'Mantenedores/Producto/crearOferta.html', {'form':form})
+        elif tipo == '2':
+            #Para Categoría.
+            if request.method=="POST":
+                form = CrearOfertaCategoria(request.POST)
+                if form.is_valid():
+                    of = form.save()
+                    prod = Producto.objects.filter(tipo=tipo_producto_objetivo)
+                    for x in prod:
+                        x.precio_base = x.precio_final
+                        x.precio_final = x.precio_base*(1-(of.porcentaje/100))
+                        prod.save()
+                    return redirect('appSupp:exito')
+                else:
+                    return render(request, 'Mantenedores/Producto/crearOferta.html', {'form':form})
+            else:
+                form = CrearOfertaCategoria()
+                return render(request, 'Mantenedores/Producto/crearOferta.html', {'form':form})
+        else:
+            mensaje = "No seleccionó el tipo de oferta a crear."
+            return render(request, 'Mantenedores/Mensajes/error.html', {'mensaje':mensaje})
+    else:
+        return redirect('appSupp:error')
+
+def EliminarOferta(request, idoferta):
+    if request.user.is_authenticated:
+        if idoferta is not None:
+            det = Oferta.objects.get(id_oferta=idoferta)
+        if request.method=="POST":
+            if det.producto_objetivo is None:
+                #Categoría
+                prod = Producto.objects.filter(tipo=det.tipo_producto_objetivo)
+                for x in prod:
+                    prod.precio_final = prod.precio_base
+                    prod.save()
+                det.delete()
+            elif det.tipo_producto_objetivo is None:
+                #Producto Específico
+                prod = Producto.objects.get(id_producto=det.producto_objetivo.id_producto)
+                prod.precio_final = prod.precio_base
+                prod.save()
+                det.delete()
+            return redirect('appSupp:ofertas')
+    else:
+        return redirect('appSupp:error')
+    return render(request, 'Mantenedores/Producto/eliminarOferta.html', {'oferta':det})
