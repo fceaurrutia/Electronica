@@ -1,7 +1,21 @@
+body{
+    background: url("/static/img/fondo.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 header {
     background-color: lightcyan;
     padding-bottom: 1%;
 }
+.cajita{
+    border: solid black 1px;
+    background-color: aquamarine;
+    padding:2px;
+    margin: 2px;
+}
+
 #dropdownmenu{
     transition: 0.5s;
 }
@@ -12,6 +26,12 @@ header {
 .centrado{
     display: block;
     margin:0 auto;
+    text-align: center;
+}
+.producto{
+    width: 200px;
+    height: 200px;
+    border: solid lightblue 2px;
 }
 .cortoCentrado{
     display:block; 
@@ -33,6 +53,11 @@ header {
     header h1{
         font-size: 36px;
         font-weight: bold;
+    }
+    .producto{
+        width: 150px;
+        height: 150px;
+        border: solid lightblue 2px;
     }
 }
   
